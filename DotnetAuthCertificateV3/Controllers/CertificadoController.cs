@@ -25,15 +25,15 @@ namespace DotnetAuthCertificateV3.Controllers
                 // Certificado válido - autenticar o usuário
                 var claims = new[]
                 {
-                    new Claim(ClaimTypes.Name, clientCertificate.Subject),  // Nome do certificado
-                    new Claim("Thumbprint", clientCertificate.Thumbprint)  // Thumbprint do certificado
+                    new Claim(ClaimTypes.Name, clientCertificate.Subject),      // Nome do certificado
+                    new Claim("Thumbprint", clientCertificate.Thumbprint)       // Thumbprint do certificado
                 };
 
                 var identity = new ClaimsIdentity(claims, "Certificate");
                 var principal = new ClaimsPrincipal(identity);
                 HttpContext.User = principal;                                   // Define o usuário autenticado
 
-                return Json("CertificadoValido");                   // Página de sucesso ou próxima ação
+                return Json("CertificadoValido");                               // Página de sucesso ou próxima ação
             }
 
             // Caso o certificado seja inválido ou ausente
