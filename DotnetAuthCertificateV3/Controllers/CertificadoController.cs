@@ -16,7 +16,7 @@ namespace DotnetAuthCertificateV3.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ValidarCertificado()
+        public async Task<JsonResult> ValidarCertificado()
         {
             var clientCertificate = await Request.HttpContext.Connection.GetClientCertificateAsync();
 
@@ -25,19 +25,19 @@ namespace DotnetAuthCertificateV3.Controllers
                 // Certificado válido - autenticar o usuário
                 var claims = new[]
                 {
-                new Claim(ClaimTypes.Name, clientCertificate.Subject),  // Nome do certificado
-                new Claim("Thumbprint", clientCertificate.Thumbprint)  // Thumbprint do certificado
-            };
+                    new Claim(ClaimTypes.Name, clientCertificate.Subject),  // Nome do certificado
+                    new Claim("Thumbprint", clientCertificate.Thumbprint)  // Thumbprint do certificado
+                };
 
                 var identity = new ClaimsIdentity(claims, "Certificate");
                 var principal = new ClaimsPrincipal(identity);
-                HttpContext.User = principal;  // Define o usuário autenticado
+                HttpContext.User = principal;                                   // Define o usuário autenticado
 
-                return RedirectToAction("CertificadoValido");  // Página de sucesso ou próxima ação
+                return Json("CertificadoValido");                   // Página de sucesso ou próxima ação
             }
 
             // Caso o certificado seja inválido ou ausente
-            return RedirectToAction("CertificadoInvalido");  // Página de erro ou ação
+            return Json("CertificadoInvalido");  // Página de erro ou ação
         }
 
         private bool ValidarCertificado(X509Certificate2 certificate)

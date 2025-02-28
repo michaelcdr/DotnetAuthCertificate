@@ -19,7 +19,7 @@ namespace DotnetAuthCertificateV3
                 {
                     options.ConfigureHttpsDefaults(httpsOptions =>
                     {
-                        httpsOptions.ClientCertificateMode = ClientCertificateMode.AllowCertificate; // Permite certificados
+                        httpsOptions.ClientCertificateMode = ClientCertificateMode.RequireCertificate; // Permite certificados
                         httpsOptions.SslProtocols = SslProtocols.Tls12; // Usa TLS seguro
                     });
                 })
